@@ -1,0 +1,28 @@
+body {
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+#container {
+  height: 100vh;
+  text-align: center;
+}
+
+#gameOfLife {
+  display: grid;
+  grid-template-columns: repeat(10, 5vw);
+  grid-template-rows: repeat(10, 5vw);
+  /* TODO: generate the number of cells based off viewport. Make sure each cell is a square */
+  height: 100%;
+  grid-gap: 2px;
+  padding: 10px;
+}
+
+.cell {
+  border: 1px solid black;
+  display: block;
+}
+
+.cell.dead {
+  background-color: black;
+}
