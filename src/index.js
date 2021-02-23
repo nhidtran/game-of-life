@@ -1,10 +1,11 @@
 // start and pause game on space part keydown
-document.addEventListener("keydown", (key) => {
-  if (key.code == "Space") {
+document.addEventListener("keydown", (e) => {
+  if (e.keyCode == 32 && e.target == document.body) {
     if (play == false) {
       play = true;
       universe.playGame();
     }
+    e.preventDefault();
   }
 });
 
@@ -31,7 +32,7 @@ GameOfLife.prototype = {
       diagBtmLeft,
       diagBtmRight,
       diagTopLeft,
-      diagTopRight,
+      diagTopRight
     ].filter((node) => node !== undefined && node !== null);
   },
   setPosition: function (x, y, state, node) {
@@ -39,7 +40,7 @@ GameOfLife.prototype = {
       x,
       y,
       state,
-      node,
+      node
     });
   },
   playGame: function () {
@@ -60,8 +61,6 @@ GameOfLife.prototype = {
             neighbors.filter((neighbor) => neighbor.state == true).length >= 3
           ) {
             // 3 or more live neighbors, dies - overpopulation
-            // node.classList.remove("alive");
-            // node.classList.add("dead");
             this.nextGen.push({ ...cell, state: false });
           } else if (
             // Any live cell with fewer than two live neighbors dies, as if caused by under population.
@@ -73,9 +72,9 @@ GameOfLife.prototype = {
           // do nothing, Any live cell with two or three live neighbors lives on to the next generation.
         }
       });
-      updateBoard();
+      updateGrid();
     }
-  },
+  }
 };
 
 function createKey(row, col) {
@@ -90,14 +89,14 @@ function handleClick(row, col, node) {
       // if cell is dead
       universe.layout.set(key, {
         ...universe.layout.get(key),
-        state: true,
+        state: true
       });
       node.classList.remove("dead");
       node.classList.add("alive");
     } else {
       universe.layout.set(key, {
         ...universe.layout.get(key),
-        state: false,
+        state: false
       });
       node.classList.remove("alive");
       node.classList.add("dead");
@@ -107,6 +106,8 @@ function handleClick(row, col, node) {
 
 function drawGrid(rows, cols) {
   const root = document.getElementById("gameOfLife");
+  root.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
+  root.style.gridTemplateRows = `repeat(${rows}, 50px)`;
   if (root) {
     for (let row = 0; row < rows; ++row) {
       for (let col = 0; col < cols; ++col) {
@@ -126,7 +127,7 @@ function drawGrid(rows, cols) {
   }
 }
 
-function updateBoard() {
+function updateGrid() {
   universe.nextGen.forEach((nextCell) => {
     const { x, y, state, node } = nextCell;
 
@@ -150,4 +151,9 @@ function updateBoard() {
 /************************************* */
 let play = false;
 const universe = new GameOfLife();
-drawGrid(10, 10);
+
+// get dimensions based off of viewport
+const rows = Math.floor(document.getElementById("container").clientHeight / 50);
+const cols = Math.floor(document.getElementById("container").clientWidth / 50);
+
+drawGrid(rows, cols);
