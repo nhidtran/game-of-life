@@ -10,3 +10,10 @@ html, css grid, vanilla js
 - Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
 press space key to see each life iteration
+
+
+
+### Resources:
+- Problem Set: [Conway Game of Life](https://www.geeksforgeeks.org/program-for-conways-game-of-life/)
+- [Build response grid with true squares](https://css-tricks.com/a-grid-of-logos-in-squares/)
+- [Element.clientHeight](https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight)
